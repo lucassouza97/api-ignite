@@ -1,5 +1,5 @@
 import { Category } from '../model/Category'
-
+import { v4 as uuid } from 'uuid'
 //DTO => data transfer object
 
 interface ICreateCategoryDTO {
@@ -17,14 +17,25 @@ class CategoriesRepository {
 		const category = new Category()
 
 		Object.assign(category, {
+			id: uuid(),
 			name,
 			description,
 			created_at: new Date().toISOString(),
 		})
 
 		this.categories.push(category)
+	}
 
-		console.log('Categoria inserida com sucesso', category)
+	findAll(): Category[] {
+		return this.categories
+	}
+
+	findByName(name: string): Category {
+		const category = this.categories.find((category) => {
+			return category.name === name
+		})
+
+		return category
 	}
 }
 
