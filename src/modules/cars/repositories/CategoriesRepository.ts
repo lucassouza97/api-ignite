@@ -1,12 +1,12 @@
 import { Category } from '../model/Category'
 import { v4 as uuid } from 'uuid'
+import {
+	ICategoriesRepository,
+	ICreateCategoryDTO,
+} from './ICategoriesRepository'
 //DTO => data transfer object
 
-interface ICreateCategoryDTO {
-	name: string
-	description: string
-}
-class CategoriesRepository {
+class CategoriesRepository implements ICategoriesRepository {
 	private categories: Category[]
 
 	constructor() {
@@ -26,7 +26,7 @@ class CategoriesRepository {
 		this.categories.push(category)
 	}
 
-	findAll(): Category[] {
+	list(): Category[] {
 		return this.categories
 	}
 
