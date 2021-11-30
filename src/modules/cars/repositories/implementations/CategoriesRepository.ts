@@ -1,16 +1,27 @@
-import { Category } from '../model/Category'
+import { Category } from '../../model/Category'
 import { v4 as uuid } from 'uuid'
 import {
 	ICategoriesRepository,
 	ICreateCategoryDTO,
-} from './ICategoriesRepository'
-//DTO => data transfer object
+} from '../ICategoriesRepository'
+
+//singleton
 
 class CategoriesRepository implements ICategoriesRepository {
 	private categories: Category[]
 
-	constructor() {
+	private static INSTANCE: CategoriesRepository
+
+	private constructor() {
 		this.categories = []
+	}
+
+	public static getInstance(): CategoriesRepository {
+		if (!CategoriesRepository.INSTANCE) {
+			CategoriesRepository.INSTANCE = new CategoriesRepository()
+		}
+
+		return CategoriesRepository.INSTANCE
 	}
 
 	create({ name, description }: ICreateCategoryDTO): void {
